@@ -69,6 +69,9 @@ class DataSearch extends SearchDelegate<Repository> {
                 subtitle: repository.description != null ?
                   Text(repository.description) :
                   null,
+                onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(repository)),);
+                },
               );
             },
             itemCount: snapshot.data.length,
@@ -80,4 +83,39 @@ class DataSearch extends SearchDelegate<Repository> {
       }
     );
   }
+}
+
+class DetailsPage extends StatelessWidget{
+  final Repository repository;
+  DetailsPage( this.repository) ;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title : Text(repository.fullName),
+      ),
+      body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+                  repository.avatarUrl != null ?
+              Image.network(repository.avatarUrl) :
+              Icon(Icons.location_city),
+              Text(repository.fullName),
+              repository.description != null ?
+              Text(repository.description) :  null,
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Go back!'),
+              ),
+
+
+            ],
+          )
+      ),
+    );
+  }
+
 }
